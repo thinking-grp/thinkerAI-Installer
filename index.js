@@ -14,13 +14,14 @@ function createWindow() {
     resizable: false,
     closable: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      preload: `${__dirname}/preload/preload.js`
     }
   });
 
   win.setMenuBarVisibility(false);
 
-  win.loadFile("index.html");
+  win.loadFile(`${__dirname}/renderer/index.html`);
 
   installer.downloadLatest(null, 2);
 }
