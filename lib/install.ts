@@ -142,4 +142,4 @@ class Installer {
   }
 }
 
-export default Installer;
+export = Installer;

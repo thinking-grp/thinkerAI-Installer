@@ -1,8 +1,5 @@
 const { app, BrowserWindow, globalShortcut } = require("electron");
-const readline = require('readline');
-const unzipper = require('unzipper');
-const fs = require('fs');
-const { default: Installer } = require("./lib/install");
+const Installer = require("./lib/install");
 
 const installer = new Installer("Mf-3d", "Flune-Browser");
 
