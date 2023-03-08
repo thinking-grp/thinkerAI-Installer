@@ -9,7 +9,7 @@ window.install_dir_input.setText(documents_path)
 def out_log(text):
     log = window.install_log_output.text()
     lines = log.split("\n")  # 改行で文字列を分割し、リストにする
-    if len(lines) > 35:
+    if len(lines) > 33:
         lines.pop(0)  # リストの先頭を削除する
         log = "\n".join(lines)  # リストの要素を改行で結合して文字列に戻す
     out = log + "\n" + text
