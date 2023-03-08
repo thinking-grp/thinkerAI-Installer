@@ -23,6 +23,7 @@ def select_folder():
     window.install_dir_input.setText(documents_path)
     out_log("[select]"+documents_path)
 def install():
+    window.install_button.setEnabled(False)
     try:
         with zipfile.ZipFile("thinkerAI.zip", 'r') as zip_ref:
             file_count = len(zip_ref.namelist())
@@ -38,6 +39,7 @@ def install():
                 zip_ref.extract(file, os.path.join(documents_path, "thinkerAI","thinkerAI-develop","runtime"))
     except FileNotFoundError:
         out_log("[Error] File not found")
+        window.install_button.setEnabled(True)
         return
     out_log("[extract]Finish")
     out_log("[Script]Script is running.")
