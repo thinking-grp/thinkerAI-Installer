@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, uic #This installer is built using QT.
-import os,zipfile
+import os,zipfile,time
 import tkinter as tk
 from tkinter import filedialog
 documents_path = os.path.join(os.path.expanduser("~"), "Documents")
@@ -29,15 +29,15 @@ def install():
             for i, file in enumerate(zip_ref.namelist()):
                 zip_ref.extract(file, os.path.join(documents_path, "thinkerAI"))
                 out_log("[extract]" + file)
-                window.progressBar.setValue((i + 1) * 200 / file_count)
+                window.progressBar.setValue((i + 1) * 100 / file_count)
         with zipfile.ZipFile("python.zip", 'r') as zip_ref:
             file_count = len(zip_ref.namelist())
             for i, file in enumerate(zip_ref.namelist()):
-                zip_ref.extract(file, os.path.join(documents_path, "thinkerAI","thinkerAI-develop","runtime"))
                 out_log("[extract]" + file)
-                window.progressBar.setValue(((i + 1) * 200 / file_count) + 100)
+                window.progressBar.setValue((i + 1) * 100 / file_count)
+                zip_ref.extract(file, os.path.join(documents_path, "thinkerAI","thinkerAI-develop","runtime"))
     except FileNotFoundError:
-        out_log("[Error]thinkerAI.zip Not found")
+        out_log("[Error] File not found")
         return
     out_log("[extract]Finish")
     out_log("[Script]Script is running.")
