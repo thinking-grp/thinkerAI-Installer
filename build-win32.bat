@@ -1,0 +1,1 @@
+python -m pyinstaller --add-data .\lib\window.ui;.\lib main.py --noconsole --onefile
