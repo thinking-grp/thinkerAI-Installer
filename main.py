@@ -28,7 +28,6 @@ class ExtractThread(QThread):
         super().__init__(parent)
 
     def run(self):
-        print("a")
         try:
             with zipfile.ZipFile(os.path.join(os.getcwd(), "thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
@@ -75,7 +74,6 @@ def out_log(text: str) -> None:
         window.install_log_output.append(text)
         window.install_log_output.verticalScrollBar().setValue(window.install_log_output.verticalScrollBar().maximum())
     except Exception as e:
-        # 例外をキャッチしてエラーダイアログに表示する
         error_dialog = QtWidgets.QErrorMessage()
         error_dialog.showMessage(f"An error occurred: {str(e)}")
         error_dialog.exec_()
@@ -89,7 +87,6 @@ def install() -> None:
         thread.out_log.connect(out_log)
         thread.run()
     except Exception as e:
-        # 例外をキャッチしてエラーダイアログに表示する
         error_dialog = QtWidgets.QErrorMessage()
         error_dialog.showMessage(f"An error occurred: {str(e)}")
         error_dialog.exec_()
@@ -104,7 +101,6 @@ if __name__ == "__main__":
         window.show()
         sys.exit(app.exec_())
     except Exception as e:
-        # 例外をキャッチしてエラーダイアログに表示する
         print(e)
         error_dialog = QtWidgets.QErrorMessage()
         error_dialog.showMessage(f"An error occurred: {str(e)}")
