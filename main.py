@@ -12,9 +12,18 @@ from typing import List
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
+def resource_path(relative_path):
+    """ PyInstallerでパッケージングされたアプリケーションでファイルパスを取得する """
+    if hasattr(sys, '_MEIPASS'):
+        # PyInstallerでパッケージングされた場合
+        base_path = sys._MEIPASS
+    else:
+        # 通常の実行の場合
+        base_path = os.path.abspath(".")
 
+    return os.path.join(base_path, relative_path)
 app = QtWidgets.QApplication(sys.argv)
-window = uic.loadUi("lib/window.ui")
+window = uic.loadUi(resource_path("lib/window.ui"))
 
 DOCUMENTS_PATH = os.path.join(os.path.expanduser("~"), "Documents")
 window.install_dir_input.setText(DOCUMENTS_PATH)
