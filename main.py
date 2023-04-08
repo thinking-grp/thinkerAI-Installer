@@ -38,13 +38,13 @@ class ExtractThread(QThread):
 
     def run(self):
         try:
-            with zipfile.ZipFile(os.path.join(os.getcwd(), "assets", "thinkerAI.zip"), 'r') as zip_ref:
+            with zipfile.ZipFile(resource_path("assets/thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
                     zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
-            with zipfile.ZipFile(os.path.join(os.getcwd(), "assets", "python.zip"), 'r') as zip_ref:
+            with zipfile.ZipFile(resource_path("assets/python.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
                     zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
