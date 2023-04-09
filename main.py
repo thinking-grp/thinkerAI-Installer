@@ -28,15 +28,15 @@ window = uic.loadUi(resource_path("lib/window.ui"))
 # インストー先の条件分岐
 if os.name == 'nt':
     # Windows
-    DOCUMENTS_PATH = 'C:\\Program Files\\thinker-ai'
+    WILL_INSTALL_PATH = 'C:\\Program Files\\thinker-ai'
 elif os.name == 'posix' and sys.platform == 'darwin':
     # Mac
-    DOCUMENTS_PATH = '/Applications/thinker-ai'
+    WILL_INSTALL_PATH = '/Applications/thinker-ai'
 else:
     # Linux
-    DOCUMENTS_PATH = '/usr/local/bin/thinker-ai'
+    WILL_INSTALL_PATH = '/usr/local/bin/thinker-ai'
 
-window.install_dir_input.setText(DOCUMENTS_PATH)
+window.install_dir_input.setText(WILL_INSTALL_PATH)
 
 
 class ExtractThread(QThread):
@@ -57,20 +57,20 @@ class ExtractThread(QThread):
             with zipfile.ZipFile(os.path.join(resource_path("assets"),"thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
-                    zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI"))
+                    zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
             with zipfile.ZipFile(os.path.join(resource_path("assets"),"python.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
-                    zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
+                    zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
 
             self.out_log.emit("[extract]Finish")
 
             try:
-                subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True,cwd=os.path.join(DOCUMENTS_PATH, "thinkerAI","thinkerAI-develop"))
+                subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True,cwd=os.path.join(WILL_INSTALL_PATH, "thinkerAI","thinkerAI-develop"))
             except subprocess.CalledProcessError as e:
                 self.out_log.emit(f"[Error] Script failed with exit code {e.returncode}: {e.output.strip()}")
 
@@ -85,13 +85,13 @@ class ExtractThread(QThread):
 
 
 def select_folder() -> None:
-    global DOCUMENTS_PATH
+    global WILL_INSTALL_PATH
 
     root = tk.Tk()
     root.withdraw()
 
-    selected_folder = filedialog.askdirectory(initialdir=DOCUMENTS_PATH)
-    DOCUMENTS_PATH = selected_folder
+    selected_folder = filedialog.askdirectory(initialdir=WILL_INSTALL_PATH)
+    WILL_INSTALL_PATH = selected_folder
     window.install_dir_input.setText(selected_folder)
     out_log(f"[select] {selected_folder}")
 
