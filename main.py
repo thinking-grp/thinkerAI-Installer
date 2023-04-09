@@ -1,7 +1,14 @@
-import os,subprocess,sys,zipfile
+import os
+import subprocess
+import sys
+import threading
+import time
 import tkinter as tk
+import zipfile
+
 from tkinter import filedialog
 from typing import List
+
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
@@ -31,13 +38,19 @@ class ExtractThread(QThread):
 
     def run(self):
         try:
-            with zipfile.ZipFile(resource_path("assets/thinkerAI.zip"), 'r') as zip_ref:
+            if os.name == "nt":
+                self.out_log.emit("[setting]Variables are set for Windows")
+                sh = "install-win32-x64.bat"
+            else:
+                self.out_log.emit("[setting]Variables are set for Unix-like OS")
+                sh = "install-darwin-x64.sh"
+            with zipfile.ZipFile(os.path.join(resource_path("assets"),"thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
                     zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
-            with zipfile.ZipFile(resource_path("assets/python.zip"), 'r') as zip_ref:
+            with zipfile.ZipFile(os.path.join(resource_path("assets"),"python.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
                     zip_ref.extract(file, os.path.join(DOCUMENTS_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
@@ -47,7 +60,7 @@ class ExtractThread(QThread):
             self.out_log.emit("[extract]Finish")
 
             try:
-                subprocess.check_output('install-win32-x64.bat', shell=True, stderr=subprocess.STDOUT, universal_newlines=True,cwd=os.path.join(DOCUMENTS_PATH, "thinkerAI","thinkerAI-develop"))
+                subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True,cwd=os.path.join(DOCUMENTS_PATH, "thinkerAI","thinkerAI-develop"))
             except subprocess.CalledProcessError as e:
                 self.out_log.emit(f"[Error] Script failed with exit code {e.returncode}: {e.output.strip()}")
 
@@ -57,6 +70,8 @@ class ExtractThread(QThread):
 
         except Exception as e:
             self.out_log.emit(f"[Error] {str(e)}")
+        finally:
+            self.wait()
 
 
 def select_folder() -> None:
