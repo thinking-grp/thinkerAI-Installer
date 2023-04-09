@@ -1,14 +1,7 @@
-import os
-import subprocess
-import sys
-import threading
-import time
+import os,subprocess,sys,zipfile
 import tkinter as tk
-import zipfile
-
 from tkinter import filedialog
 from typing import List
-
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
