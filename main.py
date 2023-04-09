@@ -28,15 +28,15 @@ window = uic.loadUi(resource_path("lib/window.ui"))
 # インストー先の条件分岐
 if os.name == 'nt':
     # Windows
-    install_path = 'C:\\Program Files\\thinker-ai'
+    DOCUMENTS_PATH = 'C:\\Program Files\\thinker-ai'
 elif os.name == 'posix' and sys.platform == 'darwin':
     # Mac
-    install_path = '/Applications/thinker-ai'
+    DOCUMENTS_PATH = '/Applications/thinker-ai'
 else:
     # Linux
-    install_path = '/usr/local/bin/thinker-ai'
+    DOCUMENTS_PATH = '/usr/local/bin/thinker-ai'
 
-window.install_dir_input.setText(install_path)
+window.install_dir_input.setText(DOCUMENTS_PATH)
 
 
 class ExtractThread(QThread):
