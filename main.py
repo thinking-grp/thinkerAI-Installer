@@ -25,8 +25,18 @@ def resource_path(relative_path):
 app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi(resource_path("lib/window.ui"))
 
-DOCUMENTS_PATH = os.path.join(os.path.expanduser("~"), "Documents")
-window.install_dir_input.setText(DOCUMENTS_PATH)
+# インストー先の条件分岐
+if os.name == 'nt':
+    # Windows
+    install_path = 'C:\\Program Files\\thinker-ai'
+elif os.name == 'posix' and sys.platform == 'darwin':
+    # Mac
+    install_path = '/Applications/thinker-ai'
+else:
+    # Linux
+    install_path = '/usr/local/bin/thinker-ai'
+
+window.install_dir_input.setText(install_path)
 
 
 class ExtractThread(QThread):
