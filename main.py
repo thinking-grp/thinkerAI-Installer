@@ -60,12 +60,13 @@ class ExtractThread(QThread):
                     zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
-            with zipfile.ZipFile(os.path.join(resource_path("assets"),"python.zip"), 'r') as zip_ref:
-                file_count = len(zip_ref.namelist())
-                for i, file in enumerate(zip_ref.namelist()):
-                    zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
-                    self.progress_signal.emit((i + 1) * 200 // file_count)
-                    self.out_log.emit(file)
+            if os.name == "nt":
+                with zipfile.ZipFile(os.path.join(resource_path("assets"),"python.zip"), 'r') as zip_ref:
+                    file_count = len(zip_ref.namelist())
+                    for i, file in enumerate(zip_ref.namelist()):
+                        zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
+                        self.progress_signal.emit((i + 1) * 200 // file_count)
+                        self.out_log.emit(file)
 
             self.out_log.emit("[extract]Finish")
 
