@@ -5,13 +5,46 @@ import threading
 import time
 import tkinter as tk
 import zipfile
-
+import ctypes
 from tkinter import filedialog
 from typing import List
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
+
+def is_admin():
+    """
+    現在のプロセスが管理者権限で実行されているかどうかをチェックする関数。
+    Windows以外では常にTrueを返す。
+    """
+    if os.name == 'nt':
+        try:
+            return ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            return False
+    else:
+        return os.getuid() == 0
+
+def run_as_admin():
+    """
+    管理者権限でプロセスを再起動する関数。
+    Windows以外では何もしない。
+    """
+    if os.name == 'nt':
+        if is_admin():
+            return True
+
+        script = sys.argv[0]
+        params = ' '.join(sys.argv[1:])
+        try:
+            subprocess.check_call(['runas', '/noprofile', '/user:Administrator', sys.executable, script] + sys.argv[1:])
+        except subprocess.CalledProcessError:
+            return False
+
+        sys.exit(0)
+    else:
+        return True
 
 def resource_path(relative_path):
     """ PyInstallerでパッケージングされたアプリケーションでファイルパスを取得する """
@@ -23,7 +56,10 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
-
+if not is_admin():
+    if not run_as_admin():
+        print('管理者権限で実行されていません。このスクリプトを管理者権限で実行してください。')
+        sys.exit(1)
 
 app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi(resource_path("lib/window.ui"))
