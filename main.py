@@ -54,11 +54,11 @@ class ExtractThread(QThread):
         try:
             if os.name == "nt":
                 self.out_log.emit("[setting]Variables are set for Windows")
-                sh = "./install-win32-x64.bat"
+                sh = ".\\install-win32-x64.bat"
             else:
                 self.out_log.emit(
                     "[setting]Variables are set for Unix-like OS")
-                sh = "install-darwin-x64.sh"
+                sh = "./install-darwin-x64.sh"
             with zipfile.ZipFile(os.path.join(resource_path("assets"), "thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
