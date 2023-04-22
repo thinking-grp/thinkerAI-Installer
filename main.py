@@ -14,10 +14,6 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 
 def is_admin():
-    """
-    現在のプロセスが管理者権限で実行されているかどうかをチェックする関数。
-    Windows以外では常にTrueを返す。
-    """
     if os.name == 'nt':
         try:
             return ctypes.windll.shell32.IsUserAnAdmin()
@@ -27,10 +23,6 @@ def is_admin():
         return os.getuid() == 0
 
 def run_as_admin():
-    """
-    管理者権限でプロセスを再起動する関数。
-    Windows以外では何もしない。
-    """
     if os.name == 'nt':
         if is_admin():
             return True
