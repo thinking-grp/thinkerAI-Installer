@@ -12,6 +12,7 @@ from typing import List
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
+
 def resource_path(relative_path):
     """ PyInstallerでパッケージングされたアプリケーションでファイルパスを取得する """
     if hasattr(sys, '_MEIPASS'):
@@ -22,6 +23,8 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
 app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi(resource_path("lib/window.ui"))
 
@@ -34,7 +37,8 @@ elif os.name == 'posix' and sys.platform == 'darwin':
     WILL_INSTALL_PATH = '/Applications/thinker-ai'
 else:
     # Linux
-    WILL_INSTALL_PATH = '/usr/local/bin/thinker-ai'
+    WILL_INSTALL_PATH = '/opt/thinker-ai'
+    os.chmod('/opt/thinker-ai', 0o755)
 
 window.install_dir_input.setText(WILL_INSTALL_PATH)
 
@@ -52,28 +56,33 @@ class ExtractThread(QThread):
                 self.out_log.emit("[setting]Variables are set for Windows")
                 sh = "install-win32-x64.bat"
             else:
-                self.out_log.emit("[setting]Variables are set for Unix-like OS")
+                self.out_log.emit(
+                    "[setting]Variables are set for Unix-like OS")
                 sh = "install-darwin-x64.sh"
-            with zipfile.ZipFile(os.path.join(resource_path("assets"),"thinkerAI.zip"), 'r') as zip_ref:
+            with zipfile.ZipFile(os.path.join(resource_path("assets"), "thinkerAI.zip"), 'r') as zip_ref:
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
-                    zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI"))
+                    zip_ref.extract(file, os.path.join(
+                        WILL_INSTALL_PATH, "thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
             if os.name == "nt":
-                with zipfile.ZipFile(os.path.join(resource_path("assets"),"python.zip"), 'r') as zip_ref:
+                with zipfile.ZipFile(os.path.join(resource_path("assets"), "python.zip"), 'r') as zip_ref:
                     file_count = len(zip_ref.namelist())
                     for i, file in enumerate(zip_ref.namelist()):
-                        zip_ref.extract(file, os.path.join(WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
+                        zip_ref.extract(file, os.path.join(
+                            WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
                         self.progress_signal.emit((i + 1) * 200 // file_count)
                         self.out_log.emit(file)
 
             self.out_log.emit("[extract]Finish")
 
             try:
-                subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True,cwd=os.path.join(WILL_INSTALL_PATH, "thinkerAI","thinkerAI-develop"))
+                subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True, cwd=os.path.join(
+                    WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop"))
             except subprocess.CalledProcessError as e:
-                self.out_log.emit(f"[Error] Script failed with exit code {e.returncode}: {e.output.strip()}")
+                self.out_log.emit(
+                    f"[Error] Script failed with exit code {e.returncode}: {e.output.strip()}")
 
             else:
                 self.out_log.emit("[Script] Script completed successfully.")
@@ -100,7 +109,8 @@ def select_folder() -> None:
 def out_log(text: str) -> None:
     try:
         window.install_log_output.append(text)
-        window.install_log_output.verticalScrollBar().setValue(window.install_log_output.verticalScrollBar().maximum())
+        window.install_log_output.verticalScrollBar().setValue(
+            window.install_log_output.verticalScrollBar().maximum())
     except Exception as e:
         error_dialog = QtWidgets.QErrorMessage()
         error_dialog.showMessage(f"An error occurred: {str(e)}")
