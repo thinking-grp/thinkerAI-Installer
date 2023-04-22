@@ -71,7 +71,7 @@ class ExtractThread(QThread):
                     file_count = len(zip_ref.namelist())
                     for i, file in enumerate(zip_ref.namelist()):
                         zip_ref.extract(file, os.path.join(
-                            WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop", "runtimes", "python"))
+                            WILL_INSTALL_PATH, "thinkerAI", "thinkerAI", "runtimes", "python"))
                         self.progress_signal.emit((i + 1) * 200 // file_count)
                         self.out_log.emit(file)
 
@@ -79,7 +79,7 @@ class ExtractThread(QThread):
 
             try:
                 subprocess.check_output(sh, shell=True, stderr=subprocess.STDOUT, universal_newlines=True, cwd=os.path.join(
-                    WILL_INSTALL_PATH, "thinkerAI", "thinkerAI-develop"))
+                    WILL_INSTALL_PATH, "thinkerAI", "thinkerAI"))
             except subprocess.CalledProcessError as e:
                 self.out_log.emit(
                     f"[Error] Script failed with exit code {e.returncode}: {e.output.strip()}")
