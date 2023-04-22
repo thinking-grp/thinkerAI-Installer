@@ -54,7 +54,7 @@ class ExtractThread(QThread):
         try:
             if os.name == "nt":
                 self.out_log.emit("[setting]Variables are set for Windows")
-                sh = "install-win32-x64.bat"
+                sh = "./install-win32-x64.bat"
             else:
                 self.out_log.emit(
                     "[setting]Variables are set for Unix-like OS")
