@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>InstallDirectory</string>
+     <string>インストール先</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="install_dir_input">
@@ -72,7 +72,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Install log</string>
+     <string>インストールログ</string>
     </property>
    </widget>
    <widget class="QPushButton" name="install_button">
@@ -85,7 +85,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Install</string>
+     <string>インストール</string>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBar">
