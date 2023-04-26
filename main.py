@@ -55,19 +55,7 @@ if not is_admin():
 
 app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi(resource_path("lib/window.ui"))
-
-# インストー先の条件分岐
-if os.name == 'nt':
-    # Windows
-    WILL_INSTALL_PATH = 'C:\\Program Files\\thinker-ai'
-elif os.name == 'posix' and sys.platform == 'darwin':
-    # Mac
-    WILL_INSTALL_PATH = '/Applications/thinker-ai'
-else:
-    # Linux
-    WILL_INSTALL_PATH = '/opt/thinker-ai'
-    os.chmod('/opt/thinker-ai', 0o755)
-
+WILL_INSTALL_PATH = os.path.join(os.path.expanduser("~"), "Documents")
 window.install_dir_input.setText(WILL_INSTALL_PATH)
 
 
