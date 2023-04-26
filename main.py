@@ -8,7 +8,8 @@ import zipfile
 import ctypes
 from tkinter import filedialog
 from typing import List
-
+root = tk.Tk()
+root.withdraw()
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, pyqtSignal
 
@@ -79,7 +80,7 @@ class ExtractThread(QThread):
                 file_count = len(zip_ref.namelist())
                 for i, file in enumerate(zip_ref.namelist()):
                     zip_ref.extract(file, os.path.join(
-                        WILL_INSTALL_PATH, "thinkerAI"))
+                        WILL_INSTALL_PATH, "thinkerAI","thinkerAI"))
                     self.progress_signal.emit((i + 1) * 200 // file_count)
                     self.out_log.emit(file)
             if os.name == "nt":
@@ -110,12 +111,8 @@ class ExtractThread(QThread):
             self.wait()
 
 
-def select_folder() -> None:
+def select_folder():
     global WILL_INSTALL_PATH
-
-    root = tk.Tk()
-    root.withdraw()
-
     selected_folder = filedialog.askdirectory(initialdir=WILL_INSTALL_PATH)
     WILL_INSTALL_PATH = selected_folder
     window.install_dir_input.setText(selected_folder)
