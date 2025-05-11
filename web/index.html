@@ -3,11 +3,75 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Installer UI</title>
+        <title>ThinkerAI Installer</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;400&display=swap");
+            body {
+                font-family: "Noto Sans JP", sans-serif;
+                background-color: #e8e8e8 !important;
+                font-size: 17px;
+            }
+            label {
+                font-size: 17px;
+            }
+            .shadow {
+                box-shadow: 2px 2px 15px #a1a1a1 !important;
+            }
+            .box {
+                background-color: #efefef !important;
+                padding: 15px;
+                border-radius: 10px;
+                width: 500px;
+                margin: auto;
+            }
+            .file_path {
+                background-color: #8888883f !important;
+                border: 1px solid #a1a1a1 !important;
+                padding: 10px;
+                border-radius: 15px;
+                width: 470px;
+                height: 37px;
+                margin-top: 10px;
+                margin-bottom: 15px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 17px;
+            }
+            .file_path ::placeholder {
+                color: #e8e8e8 !important;
+                padding: none;
+                margin: none;
+            }
+            .file_path:focus {
+                outline: none;
+                border: 1px solid #a1a1a1 !important;
+                background-color: #8888883f !important;
+            }
+
+            .install {
+                background-color: #8888883f !important;
+                color: #000000 !important;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 17px;
+                margin-right: 15px;
+                font-weight: 200;
+            }
+
+            .cancel {
+                background-color: #8888883f !important;
+                color: #000000 !important;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 17px;
+                margin-right: 15px;
+                font-weight: 200;
+            }
+        </style>
     </head>
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-        <div class="bg-white shadow-lg rounded-lg w-96 p-6">
+    <body class="flex items-center justify-center min-h-screen">
+        <div class="box shadow rounded-lg">
             <div class="flex justify-center mb-4">
                 <img src="logo.png" alt="ThinkerAI Logo" class="h-16" />
             </div>
@@ -16,20 +80,20 @@
             </h1>
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Installation Path</label
-                >
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Installation Path
+                </label>
                 <input
                     type="text"
                     placeholder="C:/Program Files/ThinkerAI"
-                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    class="file_path"
                 />
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >This software is MIT licensed Do you agree?</label
-                >
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    This software is MIT licensed. Do you agree?
+                </label>
                 <div class="flex items-center mb-2">
                     <input
                         type="checkbox"
@@ -41,16 +105,8 @@
             </div>
 
             <div class="flex justify-end">
-                <button
-                    class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
-                >
-                    Cancel
-                </button>
-                <button
-                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                >
-                    Install
-                </button>
+                <button class="cancel">Cancel</button>
+                <button class="install">Install</button>
             </div>
         </div>
     </body>
