@@ -14,6 +14,7 @@
             }
             label {
                 font-size: 17px;
+                font-weight: 200;
             }
             .shadow {
                 box-shadow: 2px 2px 15px #a1a1a1 !important;
@@ -42,6 +43,7 @@
                 color: #e8e8e8 !important;
                 padding: none;
                 margin: none;
+                font-weight: 200;
             }
             .file_path:focus {
                 outline: none;
@@ -75,9 +77,6 @@
             <div class="flex justify-center mb-4">
                 <img src="logo.png" alt="ThinkerAI Logo" class="h-16" />
             </div>
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">
-                ThinkerAI Installer
-            </h1>
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -90,23 +89,9 @@
                 />
             </div>
 
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    このソフトウェアはMITライセンスです 同意しますか?
-                </label>
-                <div class="flex items-center mb-2">
-                    <input
-                        type="checkbox"
-                        id="core"
-                        class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                    />
-                    <label for="core" class="ml-2 text-gray-700">同意</label>
-                </div>
-            </div>
-
             <div class="flex justify-end">
-                <button class="cancel">Cancel</button>
-                <button class="install">Install</button>
+                <button class="cancel">キャンセル</button>
+                <button class="install">インストール</button>
             </div>
         </div>
     </body>
