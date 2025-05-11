@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Installer UI</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="bg-white shadow-lg rounded-lg w-96 p-6">
+            <div class="flex justify-center mb-4">
+                <img src="logo.png" alt="ThinkerAI Logo" class="h-16" />
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">
+                ThinkerAI Installer
+            </h1>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Installation Path</label
+                >
+                <input
+                    type="text"
+                    placeholder="C:/Program Files/ThinkerAI"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >This software is MIT licensed Do you agree?</label
+                >
+                <div class="flex items-center mb-2">
+                    <input
+                        type="checkbox"
+                        id="core"
+                        class="h-4 w-4 text-blue-600 border-gray-300 rounded"
+                    />
+                    <label for="core" class="ml-2 text-gray-700">Agree</label>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button
+                    class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400"
+                >
+                    Cancel
+                </button>
+                <button
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                    Install
+                </button>
+            </div>
+        </div>
+    </body>
+</html>
